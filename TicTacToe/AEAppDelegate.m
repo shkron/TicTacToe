@@ -6,13 +6,13 @@
 //  Copyright © 2016 AE. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "AEAppDelegate.h"
 
-@interface AppDelegate ()
+@interface AEAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation AEAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
