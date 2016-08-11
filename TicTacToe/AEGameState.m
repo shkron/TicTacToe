@@ -175,10 +175,10 @@
     NSArray *moves = [state availableMoves];
 
     //pre-select odd cells to save calculation time
-    if (state.currentMove.index % 2 == 0)
-    {
-        moves = [moves filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"modulus:by:(index, 2) == 0"]];
-    }
+//    if (state.currentMove.index % 2 == 0)
+//    {
+//        moves = [moves filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"modulus:by:(index, 2) == 0"]];
+//    }
 
     for (AEGameMove *move in moves) {
 
@@ -202,6 +202,23 @@
     }
 
     return alpha;
+}
+
+-(void)asyncLogicWithCallback:(void(^)(AEGameResult result))callback
+{
+    __block AEGameState *blockSelf = self;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        AEGameResult gameResult = [blockSelf alphaBetaWithState:blockSelf player:blockSelf.currentPlayer depth:[[blockSelf availableMoves] count] alpha:AEGameResultLoss beta:AEGameResultWin];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(gameResult);
+        });
+
+    });
+
+
 }
 
 @end

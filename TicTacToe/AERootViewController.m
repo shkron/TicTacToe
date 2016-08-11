@@ -61,14 +61,24 @@
 
     if (self.isGameOver) return; //terminating is game ended
 
-    [self.currentGameState alphaBetaWithState:self.currentGameState player:self.currentGameState.currentPlayer depth:[[self.currentGameState availableMoves] count] alpha:AEGameResultLoss beta:AEGameResultWin];
 
-    [self updateBoardCell:self.currentGameState.currentMove.index forPlayer:self.currentGameState.currentPlayer];
+//    [self.currentGameState alphaBetaWithState:self.currentGameState player:self.currentGameState.currentPlayer depth:[[self.currentGameState availableMoves] count] alpha:AEGameResultLoss beta:AEGameResultWin];
+    [self.currentGameState asyncLogicWithCallback:^(AEGameResult result) {
+        [self updateBoardCell:self.currentGameState.currentMove.index forPlayer:self.currentGameState.currentPlayer];
+    }];
+    
+
+//    [self updateBoardCell:self.currentGameState.currentMove.index forPlayer:self.currentGameState.currentPlayer];
 
 }
 
 -(void)showGameResult:(AEGameResult)gameResult
 {
+    if (self.currentGameState.currentPlayer == AEPlayerO) {
+        gameResult = -gameResult;
+    }
+
+
     switch (gameResult) {
         case AEGameResultLoss:
         {

@@ -26,4 +26,6 @@
                              alpha:(NSInteger)alpha
                               beta:(NSInteger)beta;
 
+-(void)asyncLogicWithCallback:(void(^)(AEGameResult result))callback;
+
 @end
